@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="graficos">
+        <item>Vectorial</item>
+        <item>Bitmap</item>
+        <item>3D</item>
+    </string-array>
+    <string-array name="codigopais">
+        <item>VEC</item>
+        <item>BIT</item>
+        <item>3D</item>
+    </string-array>
+</resources>

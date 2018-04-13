@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/tools"
+        android:id="@+id/toolsImg"
         android:icon="@drawable/tool"
-        android:title="home"
+        android:title="Menu"
         app:showAsAction="always" />
     <item
         android:id="@+id/info"
         android:icon="@drawable/info"
-        android:title="home"
+        android:title="Info"
         app:showAsAction="always" />
 </menu>

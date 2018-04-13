@@ -4,19 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF595959"
-    tools:context=".MainActivity">
+    android:background="@drawable/fondomain"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="73dp"
+    >
+
 
     <Button
         android:id="@+id/bntExit"
         android:layout_width="174dp"
         android:layout_height="48dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="5dp"
+        android:onClick="exitGame"
         android:text="Salir"
-        android:textColor="#00dede"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlay"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnScore"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
@@ -25,11 +29,13 @@
         android:id="@+id/btnScore"
         android:layout_width="174dp"
         android:layout_height="48dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="5dp"
+        android:onClick="scoreGame"
         android:text="Puntuacions"
-        android:textColor="#00dede"
-        app:layout_constraintBottom_toTopOf="@+id/bntExit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPlay"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1" />
@@ -38,32 +44,48 @@
         android:id="@+id/btnPlay"
         android:layout_width="174dp"
         android:layout_height="48dp"
-        android:layout_marginTop="217dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="120dp"
         android:onClick="playGame"
         android:text="Jugar"
-        android:textColor="#00dede"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittleImg"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <TextView
-        android:id="@+id/tittle"
-        android:layout_width="143dp"
-        android:layout_height="27dp"
-        android:layout_marginBottom="66dp"
-        android:text="Asteroides"
-        android:textAlignment="center"
-        android:textColor="#00dede"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnPlay"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+    <ImageView
+        android:id="@+id/toolsImg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="275dp"
+        android:layout_marginTop="480dp"
+        android:onClick="abrirMenu"
+        android:src="@drawable/tool"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/infoImg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="480dp"
+        android:onClick="mostrarDialogo"
+        android:src="@drawable/info"
+        app:layout_constraintStart_toEndOf="@+id/toolsImg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/tittleImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/titulo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
