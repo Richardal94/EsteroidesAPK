@@ -1,10 +1,11 @@
 package com.example.cfgs.esteroidesapk;
 
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Category implements Parcelable {
+    private long id;
     private String user;
     private int points;
 
@@ -12,8 +13,10 @@ public class Category implements Parcelable {
         super();
     }
 
-    public Category(String tittle, int description) {
+
+    public Category(long id, String tittle, int description) {
         super();
+        this.id = id;
         this.user = tittle;
         this.points = description;
     }
@@ -23,6 +26,13 @@ public class Category implements Parcelable {
         this.points  = in.readInt();
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getUser() {
         return user;
@@ -39,6 +49,7 @@ public class Category implements Parcelable {
     public void setPoints(int points) {
         this.points = points;
     }
+
 
     @Override
     public int describeContents() {

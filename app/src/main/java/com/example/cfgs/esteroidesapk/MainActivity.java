@@ -14,24 +14,45 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class MainActivity extends Activity {
 
     private static Context mContext;
     private AnimatorSet titleSet ;
     private ImageView tittle;
-    public ArrayList<Usuari> listUsuaris = new ArrayList<Usuari>();
+    private ImageView startGameTittle;
+    private Button btnExit;
+    private Button btnScore;
+    private Button btnPlay;
+    public static SortedSet<Usuari> listUsuaris = new TreeSet<Usuari>();
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this.getApplicationContext();
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
         init();
+        animations();
+
+    }
+
+    public void init(){
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.audio);
+        mp.setLooping(true);
+        mp.start();
         tittle = (ImageView)findViewById(R.id.tittleImg) ;
+        startGameTittle= (ImageView)findViewById(R.id.startGameImg);
+        btnExit = (Button)findViewById(R.id.bntExit);
+        btnScore = (Button)findViewById(R.id.btnScore);
+        btnPlay = (Button)findViewById(R.id.btnPlay);
+
+    }
+
+    public void animations(){
         titleSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.title);
         titleSet.setTarget(tittle);
         titleSet.start();
@@ -41,11 +62,24 @@ public class MainActivity extends Activity {
         rotateTitle.setInterpolator(inter);
         titleSet.play( rotateTitle );
         titleSet.start();
+        ValueAnimator fadeAnim = ObjectAnimator.ofFloat(startGameTittle, View.ALPHA, 0,1);
+        fadeAnim.setDuration(1500);
+        fadeAnim.setRepeatCount(ValueAnimator.INFINITE);
+        fadeAnim.setRepeatMode(ValueAnimator.REVERSE);
+        fadeAnim.start();
+
     }
 
-
+    public void initBotons(View view){
+        btnExit.setVisibility(View.VISIBLE);
+        btnScore.setVisibility(View.VISIBLE);
+        btnPlay.setVisibility(View.VISIBLE);
+        startGameTittle.setVisibility(View.INVISIBLE);
+    }
     public void playGame(View view) {
-        Intent i = new Intent(this, UsuariActivity.class );
+        //Intent i = new Intent(this, UsuariActivity.class );
+        //startActivity(i);
+        Intent i = new Intent(this, JuegoActivity.class );
         startActivity(i);
     }
 
@@ -56,13 +90,6 @@ public class MainActivity extends Activity {
 
     public void exitGame(View view){
         this.finish();
-    }
-
-    public void init(){
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.audio);
-        mp.setLooping(true);
-        mp.start();
-
     }
 
     public void abrirMenu(View view){
@@ -92,10 +119,6 @@ public class MainActivity extends Activity {
             if(iterat.getNom().equals(usuari)) return iterat;
         }
         return iterat;
-    }
-
-    public static Context getContext() {
-        return mContext;
     }
 
 

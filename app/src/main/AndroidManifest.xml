@@ -20,10 +20,9 @@
         </activity>
         <activity
             android:name=".UsuariActivity"
-            android:theme="@style/Base.Theme.AppCompat.Light.Dialog.Alert" />
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth" />
         <activity
-            android:name=".ScoreActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar" />
+            android:name=".ScoreActivity" />
         <activity
             android:name=".PreferenciasActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar" />

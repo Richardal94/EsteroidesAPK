@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF595959"
+    android:background="#262626"
     tools:context=".UsuariActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginBottom="14dp"
         android:text="Usuari"
         android:textAlignment="textStart"
-        android:textColor="#00dede"
+        android:textColor="#646464"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/ptUsuari"
@@ -32,7 +32,7 @@
         android:layout_marginTop="59dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
+        android:textColor="#acacac"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -40,4 +40,15 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
+
+    <Button
+        android:id="@+id/btnStartGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:onClick="playGame"
+        android:text="Aceptar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ptUsuari" />
 </android.support.constraint.ConstraintLayout>
