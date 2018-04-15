@@ -7,7 +7,6 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -23,16 +22,18 @@ import java.util.TreeSet;
 
 public class MainActivity extends Activity {
 
-    private static Context mContext;
     private AnimatorSet titleSet ;
+    private AnimatorSet culturistaSetA;
+    private AnimatorSet culturistaSetB;
     private ImageView tittle;
     private ImageView startGameTittle;
+    private ImageView pesasAnimadasA;
+    private ImageView pesasAnimadasB;
     private Button btnExit;
     private Button btnScore;
     private Button btnPlay;
     public static SortedSet<Usuari> listUsuaris = new TreeSet<Usuari>();
     protected void onCreate(Bundle savedInstanceState) {
-        mContext = this.getApplicationContext();
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
         init();
@@ -44,7 +45,9 @@ public class MainActivity extends Activity {
         MediaPlayer mp = MediaPlayer.create(this, R.raw.audio);
         mp.setLooping(true);
         mp.start();
-        tittle = (ImageView)findViewById(R.id.tittleImg) ;
+        tittle = (ImageView)findViewById(R.id.tittleImg);
+        pesasAnimadasA = (ImageView)findViewById(R.id.pesasanimadas);
+        pesasAnimadasB = (ImageView)findViewById(R.id.pesasanimadas2);
         startGameTittle= (ImageView)findViewById(R.id.startGameImg);
         btnExit = (Button)findViewById(R.id.bntExit);
         btnScore = (Button)findViewById(R.id.btnScore);
@@ -53,6 +56,7 @@ public class MainActivity extends Activity {
     }
 
     public void animations(){
+        // Titulo
         titleSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.title);
         titleSet.setTarget(tittle);
         titleSet.start();
@@ -62,6 +66,14 @@ public class MainActivity extends Activity {
         rotateTitle.setInterpolator(inter);
         titleSet.play( rotateTitle );
         titleSet.start();
+        // Pesas
+        culturistaSetA = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.culturistaanimator);
+        culturistaSetA.setTarget(pesasAnimadasA);
+        culturistaSetA.start();
+        culturistaSetB = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.culturistaanimator);
+        culturistaSetB.setTarget(pesasAnimadasB);
+        culturistaSetB.start();
+        // STAR GAME
         ValueAnimator fadeAnim = ObjectAnimator.ofFloat(startGameTittle, View.ALPHA, 0,1);
         fadeAnim.setDuration(1500);
         fadeAnim.setRepeatCount(ValueAnimator.INFINITE);
@@ -77,9 +89,7 @@ public class MainActivity extends Activity {
         startGameTittle.setVisibility(View.INVISIBLE);
     }
     public void playGame(View view) {
-        //Intent i = new Intent(this, UsuariActivity.class );
-        //startActivity(i);
-        Intent i = new Intent(this, JuegoActivity.class );
+        Intent i = new Intent(this, UsuariActivity.class );
         startActivity(i);
     }
 
