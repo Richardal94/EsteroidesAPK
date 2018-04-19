@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
     private Button btnExit;
     private Button btnScore;
     private Button btnPlay;
+    MediaPlayer mp;
     public static SortedSet<Usuari> listUsuaris = new TreeSet<Usuari>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +43,6 @@ public class MainActivity extends Activity {
     }
 
     public void init(){
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.audio);
-        mp.setLooping(true);
-        mp.start();
         tittle = (ImageView)findViewById(R.id.tittleImg);
         pesasAnimadasA = (ImageView)findViewById(R.id.pesasanimadas);
         pesasAnimadasB = (ImageView)findViewById(R.id.pesasanimadas2);
@@ -89,6 +87,7 @@ public class MainActivity extends Activity {
         startGameTittle.setVisibility(View.INVISIBLE);
     }
     public void playGame(View view) {
+        mp.release();
         Intent i = new Intent(this, UsuariActivity.class );
         startActivity(i);
     }
@@ -131,5 +130,18 @@ public class MainActivity extends Activity {
         return iterat;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mp.release();
+    }
 
+    @Override
+    protected void onResume() {
+        if(mp!=null)mp.release();
+        super.onResume();
+        mp = MediaPlayer.create(this, R.raw.mainaudio);
+        mp.setLooping(true);
+        mp.start();
+    }
 }

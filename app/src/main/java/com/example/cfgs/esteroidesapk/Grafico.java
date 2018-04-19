@@ -25,7 +25,11 @@ public class Grafico {
         this.drawable = drawable;
         ancho = drawable.getIntrinsicWidth();
         alto = drawable.getIntrinsicHeight();
-        radioColision = (alto+ancho)/4;
+        radioColision = (alto+ancho)/8;
+    }
+
+    public static int getMaxVelocidad() {
+        return MAX_VELOCIDAD;
     }
 
     public Drawable getDrawable() {
@@ -141,6 +145,14 @@ public class Grafico {
         return Math.hypot(posX-g.posX, posY-g.posY);
     }
     public boolean verificaColision(Grafico g) {
-        return(distancia(g) < (radioColision+g.radioColision));
+        double  left = this.posX;
+        double right = this.posX + this.alto/1.5;
+        double top = this.posY + this.ancho/1.5;
+        double bottom = this.posY;
+        double r_left = g.posX;
+        double r_right = g.posX + g.alto/8;
+        double r_top = g.posY + g.ancho;
+        double r_bottom = g.posY;
+        return(right >= r_left && left <= r_right && top >= r_bottom && bottom <= r_top);
     }
 }
