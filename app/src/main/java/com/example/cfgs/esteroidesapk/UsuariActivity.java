@@ -14,10 +14,10 @@ public class UsuariActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuari);
         etUsuari = (EditText) findViewById(R.id.ptUsuari);
-        MainActivity.listUsuaris.add(new Usuari(etUsuari.getText().toString()));
     }
+
     public void playGame(View view) {
-        Intent i = new Intent(this, JuegoActivity.class );
-        startActivity(i);
+        MainActivity.listUsuaris.add(new Usuari(etUsuari.getText().toString(), JuegoActivity.puntos));
+        finish();
     }
 }

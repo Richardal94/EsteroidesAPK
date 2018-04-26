@@ -88,8 +88,8 @@ public class MainActivity extends Activity {
     }
     public void playGame(View view) {
         mp.release();
-        Intent i = new Intent(this, UsuariActivity.class );
-        startActivity(i);
+        Intent i = new Intent(this, JuegoActivity.class );
+        startActivityForResult(i, 1);
     }
 
     public void scoreGame(View view) {
@@ -130,6 +130,24 @@ public class MainActivity extends Activity {
         return iterat;
     }
 
+    private void usuarioDatos() {
+        Intent i = new Intent(this, UsuariActivity.class);
+        startActivity(i);
+    }
+
+    private void hasPerdido(){
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
+        dialogo1.setTitle("Game Over!");
+        dialogo1.setMessage("La Agencia Mundial Antidopaje te ha pillado!");
+        dialogo1.setCancelable(false);
+        dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                usuarioDatos();
+            }
+        });
+        dialogo1.show();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -143,5 +161,15 @@ public class MainActivity extends Activity {
         mp = MediaPlayer.create(this, R.raw.mainaudio);
         mp.setLooping(true);
         mp.start();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (1) : {
+                hasPerdido();
+            }
+        }
     }
 }

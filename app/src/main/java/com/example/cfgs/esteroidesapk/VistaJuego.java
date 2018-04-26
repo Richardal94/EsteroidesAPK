@@ -1,6 +1,8 @@
 package com.example.cfgs.esteroidesapk;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -15,13 +17,15 @@ public class VistaJuego extends View {
     private Vector<Grafico> Asteroides; // Vector con los Asteroides
     private int numAsteroides= 5; // Número inicial de asteroides
     private int numFragmentos= 3; // Fragmentos en que se divide
-    // //// NAVE //////
+    /////// NAVE //////
     private Grafico nave;// Gráfico de la nave
     private int giroNave; // Incremento de dirección
     private float aceleracionNave; // aumento de velocidad
     // Incremento estándar de giro y aceleración
     private static final int PASO_GIRO_NAVE = 5;
     private static final float PASO_ACELERACION_NAVE = 0.5f;
+    //// ESTEROIDES /////
+    private Drawable drawableAsteroides[]=new Drawable[4];
     // //// THREAD Y TIEMPO //////
     // Thread encargado de procesar el juego
     private ThreadJuego thread = new ThreadJuego();
@@ -40,7 +44,8 @@ public class VistaJuego extends View {
 
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Drawable drawableNave, drawableAsteroideA, drawableAsteroideB, drawableMisil;
+        Drawable drawableNave, drawableAsteroideA, drawableAsteroideB, drawableMisil, drawableBrazoIzq,
+                drawableBrazoDech, drawablePiernaIzq, drawablePiernaDech;
     // Obtenemos referencia al recurso asteroide1.png guardado en carpeta Res
         drawableAsteroideA = context.getResources().getDrawable(
                 R.drawable.culturista8bitsa);
@@ -48,11 +53,28 @@ public class VistaJuego extends View {
                 R.drawable.culturista8bitsb);
         drawableNave = context.getResources().getDrawable(
                 R.drawable.jeringuilla8bits);
+        drawableBrazoIzq =  context.getResources().getDrawable(
+                R.drawable.brazoizquierdo8bits);
+        drawableAsteroides[0] = drawableBrazoIzq;
+        drawableBrazoDech =  context.getResources().getDrawable(
+                R.drawable.brazoderecho8bits);
+        drawableAsteroides[1] = drawableBrazoDech;
+        drawablePiernaIzq =  context.getResources().getDrawable(
+                R.drawable.piernaizquierda8bits);
+        drawableAsteroides[2] = drawablePiernaIzq;
+        drawablePiernaDech =  context.getResources().getDrawable(
+                R.drawable.piernaderecha8bits);
+        drawableAsteroides[3] = drawablePiernaDech;
         nave = new Grafico(this, drawableNave);
         drawableMisil = context.getResources().getDrawable(
                 R.drawable.misil);
         misil = new Grafico(this, drawableMisil );
-    //creamos los asteroides e inicializamos su velocidad, ángulo y rotación.La posición inicial no la podemos obtener hasta conocer ancho y alto pantalla
+        generarEsteroides(drawableAsteroideA, drawableAsteroideB);
+
+    }
+
+    private void generarEsteroides(Drawable drawableAsteroideA, Drawable drawableAsteroideB) {
+        //creamos los asteroides e inicializamos su velocidad, ángulo y rotación.La posición inicial no la podemos obtener hasta conocer ancho y alto pantalla
         Asteroides = new Vector<Grafico>();
         Vector<Drawable> asteroidesDrawable = new Vector<Drawable>();
         asteroidesDrawable.add(drawableAsteroideA);
@@ -116,7 +138,16 @@ public class VistaJuego extends View {
                     }
             }
         }
+
+        // Comprovamos si colisiona la nave con un asteroide
+        for (int i = 0; i < Asteroides.size(); i++)
+            if (nave.verificaColision(Asteroides.elementAt(i))) {
+                JuegoActivity.juegoActivity.finish();
+                break;
+            }
+
     }
+
     //metodo que nos da ancho y alto pantalla
     @Override protected void onSizeChanged(int ancho, int alto,
                                            int ancho_anter, int alto_anter) {
@@ -137,9 +168,36 @@ public class VistaJuego extends View {
 
 
     private void destruyeAsteroide(int i) {
+        int tam = 1;
+        if(!buscarAsteroide(i)){
+            JuegoActivity.puntos += 100;
+        for(int n=0;n<numFragmentos;n++){
+                Grafico asteroide = new Grafico(this,drawableAsteroides[(int) Math.floor(Math.random() * (drawableAsteroides.length))]);
+                asteroide.setPosX(Asteroides.get(i).getPosX());
+                asteroide.setPosY(Asteroides.get(i).getPosY());
+                asteroide.setIncX(Math.random()*7-2-tam);
+                asteroide.setIncY(Math.random()*7-2-tam);
+                asteroide.setAngulo((int)(Math.random()*360));
+                asteroide.setRotacion((int)(Math.random()*8-4));
+                Asteroides.add(asteroide);
+            }
+        }
+        else{
+            JuegoActivity.puntos += 50;
+        }
         Asteroides.remove(i);
         misilActivo=false;
     }
+
+    private boolean buscarAsteroide(int num){
+        int i = 0;
+        for(Drawable asteroide : drawableAsteroides){
+            if(Asteroides.get(num).getDrawable()==drawableAsteroides[i]) return true;
+            i++;
+        }
+        return false;
+    }
+
     private void ActivaMisil() {
         misil.setPosX(nave.getPosX()+nave.getAncho()/2-misil.getAncho()/2);
         misil.setPosY(nave.getPosY()+nave.getAlto()/2-misil.getAlto()/2);
@@ -195,5 +253,9 @@ public class VistaJuego extends View {
         mX=x; mY=y;
         return true;
     }
+
+
+
+
 
 }
