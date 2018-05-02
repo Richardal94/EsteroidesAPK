@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,9 +44,19 @@ public class VistaJuego extends View {
     private static int PASO_VELOCIDAD_MISIL = 12;
     private boolean misilActivo=false;
     private int tiempoMisil;
+    ///// Sonidos /////
+    private SoundPool spDisparo;
+    private int idDisparo;
+    private SoundPool spExplosion;
+    private int idExplosion;
 
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
+        spDisparo = new SoundPool( 5, AudioManager.STREAM_MUSIC , 0);
+        idDisparo = spDisparo.load(context, R.raw.disparo, 0);
+        spExplosion = new SoundPool( 5, AudioManager.STREAM_MUSIC , 0);
+        idExplosion = spExplosion.load(context, R.raw.explosion, 0);
+
         Drawable drawableNave, drawableAsteroideA, drawableAsteroideB, drawableMisil, drawableBrazoIzq,
                 drawableBrazoDech, drawablePiernaIzq, drawablePiernaDech;
     // Obtenemos referencia al recurso asteroide1.png guardado en carpeta Res
@@ -133,6 +146,8 @@ public class VistaJuego extends View {
             } else {
                 for (int i = 0; i < Asteroides.size(); i++)
                     if (misil.verificaColision(Asteroides.elementAt(i))) {
+                    spDisparo.stop(idDisparo);
+                    spExplosion.play(idExplosion, 1, 1, 1, 0, 1);
                         destruyeAsteroide(i);
                         break;
                     }
@@ -209,6 +224,8 @@ public class VistaJuego extends View {
         tiempoMisil = (int) Math.min(this.getWidth() / Math.abs(
                 misil.getIncX()), this.getHeight() / Math.abs(misil.getIncY())) - 2;
         misilActivo = true;
+        spDisparo.play(idDisparo, 1, 1, 1, 0, 1);
+
     }
 
     //metodo que dibuja la vista

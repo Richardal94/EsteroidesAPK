@@ -7,8 +7,10 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +24,8 @@ import java.util.TreeSet;
 
 public class MainActivity extends Activity {
 
+    private SharedPreferences config;
+    private SharedPreferences.Editor editor;
     private AnimatorSet titleSet ;
     private AnimatorSet culturistaSetA;
     private AnimatorSet culturistaSetB;
@@ -43,6 +47,8 @@ public class MainActivity extends Activity {
     }
 
     public void init(){
+        config = getSharedPreferences("ConfigJuego", Context.MODE_PRIVATE);
+        editor = config.edit();
         tittle = (ImageView)findViewById(R.id.tittleImg);
         pesasAnimadasA = (ImageView)findViewById(R.id.pesasanimadas);
         pesasAnimadasB = (ImageView)findViewById(R.id.pesasanimadas2);
@@ -132,7 +138,7 @@ public class MainActivity extends Activity {
 
     private void usuarioDatos() {
         Intent i = new Intent(this, UsuariActivity.class);
-        startActivity(i);
+        startActivityForResult(i, 2);
     }
 
     private void hasPerdido(){
@@ -161,6 +167,7 @@ public class MainActivity extends Activity {
         mp = MediaPlayer.create(this, R.raw.mainaudio);
         mp.setLooping(true);
         mp.start();
+        mp.setVolume(new Float(0.1), new Float(0.1));
     }
 
     @Override
@@ -169,6 +176,9 @@ public class MainActivity extends Activity {
         switch(requestCode) {
             case (1) : {
                 hasPerdido();
+            }
+            case(2) : {
+                
             }
         }
     }

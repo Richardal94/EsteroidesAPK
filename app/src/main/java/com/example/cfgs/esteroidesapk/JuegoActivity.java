@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -21,7 +23,7 @@ public class JuegoActivity extends Activity {
         mp = MediaPlayer.create(this, R.raw.playaudio);
         mp.setLooping(true);
         mp.start();
-
+        mp.setVolume(new Float(0.1), new Float(0.1));
     }
 
     @Override
